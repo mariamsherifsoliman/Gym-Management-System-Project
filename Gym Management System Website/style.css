@@ -1,0 +1,175 @@
+/******************************
+ SUPABASE CONFIG
+******************************/
+const supabaseUrl = 'https://nzwsinchqfgyxoqmwgsw.supabase.co';
+const supabaseKey =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56d3NpbmNocWZneXhvcW13Z3N3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY2NjI2MTksImV4cCI6MjA4MjIzODYxOX0.YcONdZhKCtMbb9xMQrvOfq5N9GrekYdkGvYG2_QLnKA';
+
+const supabaseClient = supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+/******************************
+ TABLE CONFIGS
+ (FIX: lowercase table + column names)
+******************************/
+const tableConfigs = {
+  admin: {
+    id: 'admin_id',
+    fields: ['first_name', 'last_name', 'email_address', 'phone_number']
+  },
+  coach: {
+    id: 'coach_id',
+    fields: ['f_name', 'l_name', 'email_address', 'phone_number', 'admin_id']
+  },
+  client: {
+    id: 'client_id',
+    fields: [
+      'first_name',
+      'last_name',
+      'date_of_birth',
+      'gender',
+      'phone_number',
+      'email',
+      'coach_id',
+      'membership_id'
+    ]
+  },
+  membership: {
+    id: 'membership_id',
+    fields: ['membership_type', 'start_date', 'duration']
+  },
+  nutrition_plan: {
+    id: 'n_plan_id',
+    fields: [
+      'client_id',
+      'coach_id',
+      'diet_plan',
+      'calories_intake',
+      'protein_target',
+      'carbs_target',
+      'fats_target'
+    ]
+  },
+  workout_plan: {
+    id: 'w_plan_id',
+    fields: [
+      'client_id',
+      'coach_id',
+      'goal',
+      'level',
+      'duration_weeks'
+    ]
+  }
+};
+
+let currentTable = 'admin';
+
+/******************************
+ INITIAL LOAD
+******************************/
+window.onload = () => {
+  loadForm();
+  loadTable();
+};
+
+/******************************
+ TAB SWITCH
+******************************/
+function switchTab(table) {
+  currentTable = table;
+
+  document.querySelectorAll('.tab').forEach(btn =>
+    btn.classList.remove('active')
+  );
+  event.target.classList.add('active');
+
+  document.getElementById('form-title').innerText =
+    table.replace('_', ' ').toUpperCase() + ' Form';
+
+  loadForm();
+  loadTable();
+}
+
+/******************************
+ FORM GENERATION
+******************************/
+function loadForm() {
+  const form = document.getElementById('data-form');
+  form.innerHTML = '';
+
+  table explanation
+  tableConfigs[currentTable].fields.forEach(field => {
+    const input = document.createElement('input');
+    input.id = field;
+    input.placeholder = field.replace('_', ' ');
+    form.appendChild(input);
+  });
+}
+
+/******************************
+ LOAD TABLE DATA
+******************************/
+async function loadTable() {
+  const table = document.getElementById('data-table');
+  table.innerHTML = '';
+
+  const { data, error } = await supabaseClient
+    .from(currentTable)
+    .select('*');
+
+  if (error) {
+    table.innerHTML = `<tr><td>Error: ${error.message}</td></tr>`;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    table.innerHTML = '<tr><td>No records found</td></tr>';
+    return;
+  }
+
+  // Table header
+  const headerRow = document.createElement('tr');
+  Object.keys(data[0]).forEach(col => {
+    const th = document.createElement('th');
+    th.innerText = col;
+    headerRow.appendChild(th);
+  });
+  table.appendChild(headerRow);
+
+  // Table rows
+  data.forEach(row => {
+    const tr = document.createElement('tr');
+    Object.values(row).forEach(value => {
+      const td = document.createElement('td');
+      td.innerText = value ?? '';
+      tr.appendChild(td);
+    });
+    table.appendChild(tr);
+  });
+}
+
+/******************************
+ INSERT RECORD
+******************************/
+async function addRecord() {
+  const record = {};
+
+  tableConfigs[currentTable].fields.forEach(field => {
+    const input = document.getElementById(field);
+    record[field] = input.value || null;
+    input.value = '';
+  });
+
+  const { error } = await supabaseClient
+    .from(currentTable)
+    .insert(record);
+
+  if (error) {
+    alert('Insert error: ' + error.message);
+  } else {
+    alert('Record added successfully!');
+    loadTable();
+  }
+}
