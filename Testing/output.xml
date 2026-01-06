@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.10.7 on darwin)" generated="2026-01-02T13:14:37.006608" rpa="false" schemaversion="5">
+<suite id="s1" name="Gym Project Copy" source="/Users/mariamsherif/Documents/gym project copy">
+<suite id="s1-s1" name="Gym Test" source="/Users/mariamsherif/Documents/gym project copy/gym_test.robot">
+<test id="s1-s1-t1" name="Email Should Be Valid Format" line="20">
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>mariam@test.com</arg>
+<arg>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" start="2026-01-02T13:14:37.050027" elapsed="0.000590"/>
+</kw>
+<status status="PASS" start="2026-01-02T13:14:37.047958" elapsed="0.002939"/>
+</test>
+<status status="PASS" start="2026-01-02T13:14:37.036184" elapsed="0.016528"/>
+</suite>
+<status status="PASS" start="2026-01-02T13:14:37.011413" elapsed="0.043101"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Gym Project Copy" id="s1" pass="1" fail="0" skip="0">Gym Project Copy</stat>
+<stat name="Gym Test" id="s1-s1" pass="1" fail="0" skip="0">Gym Project Copy.Gym Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
