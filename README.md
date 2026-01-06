@@ -16,12 +16,12 @@ Navigate to the Gym Management System Website folder, download the HTML, CSS, an
 
 # Contribution Breakdown
 	•	Milestone 1: 
-    • Functional Requirements: Malak Hesham
-    • Non-Functional Requirements: Mariam Sherif
+    Functional Requirements: Malak Hesham
+    Non-Functional Requirements: Mariam Sherif
     • Use Case Scenarios: Malak Ehab
 	•	Milestone 2:
-  	•	SQL: Malak Hesham
-  	•	ERD & Relational Model: Malak Ehab & Malak Hesham
+  	SQL: Malak Hesham
+  	ERD & Relational Model: Malak Ehab & Malak Hesham
 	•	Milestone 3: Zeina Shebl
 	•	Milestone 4: Mariam Sherif
 	•	Milestone 5: Mariam Sherif
