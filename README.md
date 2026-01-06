@@ -8,4 +8,8 @@ The system includes requirement analysis, database design, and an ERD to support
 
 The project was tested using Robot Framework, and all test cases passed successfully, confirming that the system functions as expected.
 
+# How to Run the Project
+
+Navigate to the Gym Management System Website folder, download the HTML, CSS, and JavaScript files, then open the HTML file using Live Server to run the project.
+
 All source code, documentation, and test results are available in this GitHub repository.
